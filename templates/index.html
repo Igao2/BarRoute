@@ -2,18 +2,22 @@
 <meta charset="UTF-8" lang="pt-br">
 <title>Bar Routes</title>
 <head>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC93QqwB1SGrVxEHcaXM38eCN9hlNq8aNE&libraries=places,geometry&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC93QqwB1SGrVxEHcaXM38eCN9hlNq8aNE&libraries=places&callback=initMap"></script>
     <link rel="stylesheet" href="/static/styles.css" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Passion_One:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   
-   <div id="map"></div>
+   
     <div class="conteiner">
     <div class="zabu">
-        <h1>
-            Bar route <img class="beer" src="/static/761866.jpeg"></img>
+        <h1>Bar route</h1> <img class="beer" src="/static/761866.jpeg"></img>
             <br><br><br><br>
+           
+       
+
+            <div id="map" style="height: 200px;"></div>
+
             <div>
                 <form action="/" method="post">
                     <input type="hidden" value="A" name = "valorA">
@@ -21,66 +25,97 @@
                     <input type="submit" class="but">
                 </form>
             </div>
-            
-        </h1>
     </div>
+    
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
     
-    initMap();
+    getLocation()
 });
 var map;
 var service;
 
-async function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { latitude: -34.397, longitude: 150.644 },
-        zoom: 15
-    });
+const placesClient = new google.maps.places.PlacesClient(
+  {
+    key: "AIzaSyC93QqwB1SGrVxEHcaXM38eCN9hlNq8aNE"
+  }
+);
 
-    service = new google.maps.places.PlacesService();
+    function getLocation() {
+  // Chama o método getCurrentPosition() da API de Geolocalização
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      // Armazena a localização atual em um objeto Position
 
-    var request = {
-        location: new google.maps.LatLng(latitude, longitude),
-        radius: 500, // Raio de busca em metros
-        type: ['bar']  // Tipo de lugar a ser procurado (no caso, bares)
-    };
 
-    service.nearbySearch(request, callback);
-}
+    // Get the Google Places object
+    var places = google.maps.places;
+      var location = position;
+        
+     var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    console.log(latitude)
+    console.log(longitude)
 
-function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-        var placesWithDistances = [];
-
-        for (var i = 0; i < results.length; i++) {
-            var place = results[i];
-
-            // Calcula a distância entre a localização atual e o lugar
-            var distance = google.maps.geometry.spherical.computeDistanceBetween(
-                new google.maps.LatLng(latitude, longitude),
-                place.geometry.location
-            );
-
-            // Crie um objeto com os detalhes do lugar e a distância
-            var placeWithDistance = {
-                name: place.name,
-                address: place.vicinity,
-                distance: distance
-            };
-
-            placesWithDistances.push(placeWithDistance);
-        }
-
-        // Transforme o array em um JSON
-        var placesJSON = JSON.stringify(placesWithDistances);
-        document.getElementsByName("valueA").values = placesJSON
-
-        // Faça algo com o JSON (por exemplo, envie-o para o servidor ou exiba-o na página)
-        console.log(placesJSON);
+    initMap(latitude,longitude)
+    
+    },
+    function(error) {
+      // Erro ao obter a localização do usuário
+      console.log(error);
     }
+  );
 }
+
+
+
+
+
+function initMap(latitude,longitude) {
+            const sydney = new google.maps.LatLng(latitude,longitude);
+            infowindow = new google.maps.InfoWindow();
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: sydney,
+                zoom: 15,
+            });
+          
+            var request = {
+            location: sydney,
+            radius: '5000',
+            type: ['bar']
+            };
+          
+            service = new google.maps.places.PlacesService(map);
+            service.nearbySearch(request, callback);
+          }
+          function callback(results, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+          createMarker(results[i]);
+          }
+        }
+}
+          
+          function createMarker(place) {
+            if (!place.geometry || !place.geometry.location) return;
+          
+            const marker = new google.maps.Marker({
+              map,
+              position: place.geometry.location,
+            });
+            
+          
+            google.maps.event.addListener(marker, "click", () => {
+              infowindow.setContent(place.name || "");
+              infowindow.open(map);
+            });
+          }
+          
+          window.initMap = initMap()
+
+
+
 
     </script>
     

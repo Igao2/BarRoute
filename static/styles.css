@@ -6,6 +6,8 @@
 body{
     background-color: black;
 }
+
+
 .beer{
     position: absolute;
     width: 70px;
@@ -35,7 +37,7 @@ h1{
 .but
 {
     position: absolute;
-    top: 200px;
+    top: 500px;
     left: 33%;
     text-align: justify;
     font-family: 'Assistant',Arial, Helvetica, sans-serif;
