@@ -12,7 +12,9 @@
     <div class="conteiner">
     <div class="zabu">
         <h1>Bar route</h1> <img class="beer" src="/static/761866.jpeg"></img>
-            <br><br><br><br>
+            <br><br>
+            <div id="texto">Bares em até 5km:</div>
+            <br><br>
            
        
 
@@ -35,34 +37,29 @@
 });
 var map;
 var service;
-
-const placesClient = new google.maps.places.PlacesClient(
-  {
-    key: "AIzaSyC93QqwB1SGrVxEHcaXM38eCN9hlNq8aNE"
-  }
-);
+var a
+var b
+var distancia = [0]
+var tempomedio = [0]
 
     function getLocation() {
-  // Chama o método getCurrentPosition() da API de Geolocalização
+
   navigator.geolocation.getCurrentPosition(
     function(position) {
-      // Armazena a localização atual em um objeto Position
-
-
-    // Get the Google Places object
     var places = google.maps.places;
       var location = position;
         
-     var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
-    console.log(latitude)
-    console.log(longitude)
+    var latitude = position.coords.latitude;
+     var longitude = position.coords.longitude;
+     a = latitude
+     b = longitude
+    
 
     initMap(latitude,longitude)
     
     },
     function(error) {
-      // Erro ao obter a localização do usuário
+    
       console.log(error);
     }
   );
@@ -73,23 +70,23 @@ const placesClient = new google.maps.places.PlacesClient(
 
 
 function initMap(latitude,longitude) {
-            const sydney = new google.maps.LatLng(latitude,longitude);
+            const lugar = new google.maps.LatLng(latitude,longitude);
             infowindow = new google.maps.InfoWindow();
             map = new google.maps.Map(document.getElementById("map"), {
-                center: sydney,
+                center: lugar,
                 zoom: 15,
             });
           
             var request = {
-            location: sydney,
+            location: lugar,
             radius: '5000',
             type: ['bar']
             };
           
             service = new google.maps.places.PlacesService(map);
-            service.nearbySearch(request, callback);
+            service.nearbySearch(request, callbacki);
           }
-          function callback(results, status) {
+          function callbacki(results, status) {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
           createMarker(results[i]);
@@ -103,16 +100,81 @@ function initMap(latitude,longitude) {
             const marker = new google.maps.Marker({
               map,
               position: place.geometry.location,
+              title: place.name
             });
-            
-          
-            google.maps.event.addListener(marker, "click", () => {
-              infowindow.setContent(place.name || "");
-              infowindow.open(map);
+          var s = place.name
+            /*marker.setTitle(place.name)
+            marker.setLabelTextStyle({
+             color: "red",
+             fontSize: "16px",
+              });
+              */
+            var lat = marker.getPosition().lat()
+            var long = marker.getPosition().lng()
+           
+            calcularDistancia(lat,long)
+            console.log(lat, long)
+              
+            const infowindow = new google.maps.InfoWindow({
+               content: s,
+              ariaLabel: "",
+                   });
+            marker.addListener("click", () => {
+              infowindow.open({
+              anchor: marker,
+              map,
+              });
             });
+
           }
+          function calcularDistancia(latitude,longitude)
+          {
+            var origin1 = new google.maps.LatLng(a,b);
+            
+           
+            var destinationB = new google.maps.LatLng(latitude, longitude);
+
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix(
+              {
+                origins: [origin1,],
+                destinations: [destinationB],
+                travelMode: 'WALKING',
+              }, callback);
+          }
+         
+          function callback(response, status) {
+            if (status == 'OK') {
+              var origins = response.originAddresses;
+              var destinations = response.destinationAddresses;
+
+              for (var i = 0; i < origins.length; i++) {
+                var results = response.rows[i].elements;
+                for (var j = 0; j < results.length; j++) {
+                  var element = results[j];
+                  var distance = element.distance.text;
+                  console.log(distance)
+                  distancia.push(distance)
+                  var duration = element.duration.text;
+                  console.log(duration)
+                  tempomedio.push(duration)
+                  var from = origins[i];
+                  var to = destinations[j];
+                }
+              }
+            }
+          }
+        
           
-          window.initMap = initMap()
+         /* function getDistance(marker) {
+          var myLatLng = new google.maps.LatLng(a, b);
+          var distance = google.maps.geometry.distanceBetween(
+          myLatLng,
+          marker.getPosition()
+            );
+          return distance;
+          }*/
+          //window.initMap = initMap()
 
 
 
