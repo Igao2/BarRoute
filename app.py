@@ -1,4 +1,5 @@
 from flask import Flask,render_template,request,jsonify
+from dicionario import conveersao
 
 app = Flask(__name__)
 
@@ -9,9 +10,12 @@ def index():
 
 @app.route("/", methods=['POST'])
 def post():
-   value = request.form["valueA"]
-  
+   distanciaatual = request.form['distanciaAtual']
+   distanciaentre = request.form['distanciasi']
+   nome = request.form['nome']
    
+   return conveersao(distanciaatual,distanciaentre,nome)
+ 
 if __name__ == "__main__":
     app.run()
 
