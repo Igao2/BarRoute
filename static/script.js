@@ -223,11 +223,35 @@ function initMap(latitude,longitude) {
           }
           console.log(document.getElementById("nomes").value)
          }
+         function pegar5distancias()
+         {
+             var menor = 100;
+             var menores = []
+             
         
+             for(var i = 0; i<distanciasi.length;i++)
+             {
+              var dis = distanciasi[i].replace(" km","")
+              var b = dis.replace(" m","")
+              var dist = b.replace(",",".")
+               if(menor>dist)
+               {
+                 menor = dist
+                 menores.push(menor)
+                 
+               }
+             }
+             console.log(menores.length)
+             for(var i = 0;i<menores.length;i++)
+             {
+              console.log(nomes[i])
+              console.log(menores[i])
+             }
+         }
         var but = document.getElementById("aiai")
 
         but.addEventListener("click",function(){
-
+          pegar5distancias()
           passar()
         })
          /* function getDistance(marker) {
