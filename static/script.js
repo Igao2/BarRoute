@@ -11,10 +11,11 @@ var map;
 var service;
 var a
 var b
-var distanciaa = [0]
-var distanciasi = [0]
-var tempomedio = [0]
-var nomes =["exemplo"]
+var latlong = []
+var distanciainicial = []
+var distanciasi = []
+var tempomedio = []
+var nomes =[]
 
     function getLocation() {
 
@@ -89,18 +90,11 @@ function initMap(latitude,longitude) {
               */
             var lat = marker.getPosition().lat()
             var long = marker.getPosition().lng()
-            
+            latlong.push([lat,long])
        
             nomes.push(s)
             calcularDistancia(lat,long)
 
-        
-            if(baralat!=""&&baralongi!="")
-            {
-              calcularDistanciaentrebares(lat,long)
-            }
-            baralat = marker.getPosition().lat()
-            baralongi = marker.getPosition().lng()
             const infowindow = new google.maps.InfoWindow({
                content: s,
               ariaLabel: "",
@@ -141,7 +135,7 @@ function initMap(latitude,longitude) {
                   var element = results[j];
                   var distance = element.distance.text;
                   
-                  distanciaa.push(distance)
+                  distanciainicial.push(distance)
                 
                   var duration = element.duration.text;
                   var from = origins[i];
@@ -151,12 +145,12 @@ function initMap(latitude,longitude) {
             }
           }
 
-          function calcularDistanciaentrebares(latitude,longitude)
+          function calcularDistanciaentrebares(latitude,longitude,lat,long,resultados,nomes)
           {
-            var origin1 = new google.maps.LatLng(baralat,baralongi);
+            var origin1 = new google.maps.LatLng(latitude,longitude);
             
            
-            var destinationB = new google.maps.LatLng(latitude, longitude);
+            var destinationB = new google.maps.LatLng(lat, long);
 
             var service = new google.maps.DistanceMatrixService();
             service.getDistanceMatrix(
@@ -164,95 +158,109 @@ function initMap(latitude,longitude) {
                 origins: [origin1,],
                 destinations: [destinationB],
                 travelMode: 'WALKING',
-              }, callbacko);
-          }
+              }, function(response,status){
+                if (status === 'OK') {
+                  var results = response.rows[0].elements[0];
+                  var distance = results.distance.text;
+            
+                  // Adicione o resultado ao array resultados
+                  resultados.push([nomes,distance]);
 
-          function callbacko(response, status) {
-            if (status == 'OK') {
-              var origins = response.originAddresses;
-              var destinations = response.destinationAddresses;
-
-              for (var i = 0; i < origins.length; i++) {
-                var results = response.rows[i].elements;
-                for (var j = 0; j < results.length; j++) {
-                  var element = results[j];
-                  var distance = element.distance.text;
-                  
-                  distanciasi.push(distance)
-                  var duration = element.duration.text;
-                  tempomedio.push(duration)
-                  var from = origins[i];
-                  var to = destinations[j];
-                  
+                  if (resultados.length === latlong.length * latlong.length) {
+                    passar(resultados)
+                  }
                 }
-              }
-            }
+              });
           }
 
-         function passar()
+      
+         function passar(mec)
          {
           
          
-         distanciaa.shift()
-        distanciasi.shift()
-         nomes.shift()
-         var zero = "0,0"
-         distanciasi.push(zero)
+         
+         
           for(var i = 0; i<distanciaa.length;i++)
           {
             var dist = distanciaa[i].replace(" km","")
-            dist.replace(",",".")
+            var b = dist.replace(",",".")
             document.getElementById("distanciaa").value+= "/"+ dist
            
           }
           console.log(document.getElementById("distanciaa").value)
-         
-          for(var i = 0 ; i < distanciasi.length;i++)
+         var qualquercoisa =""
+          for(var i = 0 ; i < mec.length;i++)
           {
-            var dist = distanciasi[i].replace(" km","")
+            var ai = mec[i]
+            var dist = ai[1].replace(" km","")
+            var b = dist.replace(",",".")
+            var c = b.replace(" m","")
+            if(c=="1")
+            {
+              
+              continue
+            }
+            else{
+              if(i==0)
+              {
+                document.getElementById("distanciasi").value += c
+                document.getElementById("nomesbar").value += ai[0]
+              }
+              else{
+                document.getElementById("distanciasi").value += "/"+c
+                document.getElementById("nomesbar").value += "/"+ai[0]
+              }
+            }
             
-            document.getElementById("distanciasi").value +="/"+ dist
+          
             
           }
-          console.log(document.getElementById("distanciasi").value)
           
+          console.log(document.getElementById("distanciasi").value)
+          console.log(mec.length)
           for(var i = 0 ; i <nomes.length;i++)
           {
             document.getElementById("nomes").value+= ","+nomes[i]
             
           }
           console.log(document.getElementById("nomes").value)
+          document.forms["form1"].submit()
          }
          function pegar5distancias()
          {
-             var menor = 100;
-             var menores = []
-             
-        
-             for(var i = 0; i<distanciasi.length;i++)
+          var resultados = []
+             for(var i = 0;i<latlong.length;i++)
              {
-              var dis = distanciasi[i].replace(" km","")
-              var b = dis.replace(" m","")
-              var dist = b.replace(",",".")
-               if(menor>dist)
-               {
-                 menor = dist
-                 menores.push(menor)
-                 
-               }
-             }
-             console.log(menores.length)
-             for(var i = 0;i<menores.length;i++)
-             {
-              console.log(nomes[i])
-              console.log(menores[i])
-             }
-         }
-        var but = document.getElementById("aiai")
+              
+              for(var j = 0;j<latlong.length;j++)
+              {
+               
+                
+               
+                
+                var l = latlong[i]
+                var l1 = latlong[j]
+                var lat1 = l[0]
+                var long1 = l[1]
+                var lat2 = l1[0]
+                var long2 = l1[1]
+                var nome = nomes[j]
+                calcularDistanciaentrebares(lat1,long1,lat2,long2,resultados,nome)
+                
+                
 
+          
+             }
+            }
+             
+         }
+        var but = document.getElementById("but")
+         var mec = []
         but.addEventListener("click",function(){
+          
           pegar5distancias()
-          passar()
+          
+         
         })
          /* function getDistance(marker) {
           var myLatLng = new google.maps.LatLng(a, b);

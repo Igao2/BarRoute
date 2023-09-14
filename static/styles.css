@@ -10,6 +10,9 @@ body{
 {
     color:black;
 }
+textarea{
+    display: none;
+}
 .beer{
     position: absolute;
     width: 70px;
@@ -36,7 +39,7 @@ h1{
     left: 50%; 
     transform: translate(-50%, -50%)
 }
-.but
+button
 {
     position: absolute;
     top: 500px;
@@ -51,4 +54,12 @@ h1{
     box-shadow: 2px 3px 1px 1px gray;
     padding: 10px 40px 5px 40px;
 }
-
+.resultado
+{
+    background-color: black;
+    color: bisque;
+    height: 400px;
+    right: 30px;
+    top: 50px;
+    width: 300px;
+}

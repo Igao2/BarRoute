@@ -1,57 +1,54 @@
-import numpy as np
-import random as rd
-def Gerar_Problema(n,me1,ma1,me2,ma2):
-    m1 = np.zeros((n,n),int)
-    m2 = np.zeros((n,n),int)
+import random
+
+
+def avalia(curso,matriz):
+    distancia_total = 0.0
+    for i in range(len(curso) - 1):
+        bar1 = curso[i]
+        bar2 = curso[i + 1]
+        distancia_total+= float(matriz[bar1][bar2])
+    distancia_total += matriz[curso[-1]][curso[0]]
+    return distancia_total
+
+def hill_climbing(curso, max_iteracoes,matriz,nomes):
+    curso_atual = curso[:]
+    bar_nomeatual = nomes[:]
+    distancia_atual = avalia(curso_atual,matriz)
+
+    for _ in range(max_iteracoes):
+        
+        novo_curso = curso_atual[:]
+        novo_bar = bar_nomeatual[:]
+        i, j = random.sample(range(len(novo_curso)), 2)
+        novo_curso[i], novo_curso[j] = novo_curso[j], novo_curso[i]
+        novo_bar[i], novo_bar[j] = novo_bar[j], novo_bar[i]
+        
+        nova_distancia = avalia(novo_curso,matriz)
+
+        # Aceite a nova solução se ela for melhor ou igual
+        if nova_distancia <= distancia_atual:
+            curso_atual = novo_curso
+            bar_nomeatual = novo_bar
+            distancia_atual= nova_distancia
+
+    return curso_atual, distancia_atual,bar_nomeatual
+
+
+def iniciar(matriz,nomes):
+   
+    solucao_inicial = list(range(len(matriz)))
+    random.shuffle(solucao_inicial)
+
+
+    max_iteracoes = 10000
+
+
+    melhor_percurso, melhor_distancia,bares = hill_climbing(solucao_inicial, max_iteracoes,matriz,nomes)
+    nom = []
+    for i in melhor_percurso:
+        nom.append(bares[i])
+    return melhor_percurso,melhor_distancia,nom
     
-    for i in range(n):
-        for j in range(n):
-            if i!=j:
-                m1[i][j] = rd.randint(me1,ma1)
-                m2[i][j] = rd.randint(me2,ma2)
-    """
-    # N=4
-    m = [[0,1,2,3],
-         [1,0,2,3],
-         [1,2,0,3],
-         [1,2,3,0]
-        ]
-    """
-    return m1, m2
-
-def Avalia(n,s,m1,m2):
-    valor = 0
-    for i in range(0,n-1):
-        valor += 2*m1[s[i]][s[i+1]]+ 1/8*m2[s[i]][s[i+1]]
     
-    valor += 2*m1[s[n-1]][s[0]]+1/8*m2[s[n-1]][s[0]]
     
-    return valor
 
-def Solucao_Inicial(n):
-    s = []
-    
-    for i in range(n):
-        s.append(i)
-    
-    rd.shuffle(s)
-    return s
-
-
-# MÓDULO PRINCIPAL
-N   = 5    # TAMANHO DO PROBLEMA
-MIN1 = 10   # VALOR MÍNIMO PARA O CUSTO ENTRE PONTOS
-MAX1 = 30   # VALOR MÁXIMO PARA O CUSTO ENTRE PONTOS
-MIN2 = 2    # VALOR MÍNIMO PARA O CUSTO ENTRE PONTOS
-MAX2 = 8    # VALOR MÁXIMO PARA O CUSTO ENTRE PONTOS
-
-mat1, mat2 = Gerar_Problema(N,MIN1,MAX1,MIN2,MAX2)
-print("Matriz de Adjacências para o Problema")
-print(mat1)
-print(mat2)
-
-si = Solucao_Inicial(N)
-print("\nSolução inicial")
-print(si)
-vi = Avalia(N,si,mat1,mat2)
-print("Valor da solução inicial: ",vi)

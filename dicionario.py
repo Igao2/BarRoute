@@ -1,16 +1,33 @@
-def conveersao(distanciaatual,distanciaentre,nomes):
-   
-   distancia_atual = distanciaatual.split('/')
+def conveersao(distanciaentre,nomes):
    distancia_proximo = distanciaentre.split('/')
+   del distancia_proximo[0]
+   nomes_bar = nomes.split('/')
+   print(distancia_proximo)
+   float_numero = [float(d) if d != "" else 0.0 for d in distancia_proximo]
 
-   nome = nomes.split(',')
-# Crie um dicionário com as informações organizadas
-   dicionario_bares = {}
-   for i in range(len(nome)):
-        x = nome[i]
-        distancia_atual_bar = distancia_atual[i]
-        distancia_proximo_bar = distancia_proximo[i]
-        dicionario_bares[x] = {'Distancia Atual': distancia_atual_bar, 'Distancia para o Próximo': distancia_proximo_bar}
+       
+  
+   return nomes_bar, float_numero
 
-# Exibir o dicionário resultante
-   print(dicionario_bares)
+
+
+# Função para dividir a lista de distâncias em sublistas
+def dividir_distancias(distanciaentre):
+    num_bares = int(len(distanciaentre) ** 0.5)  # Calcula o número de bares
+    sublistas = []
+
+    for i in range(num_bares):
+        inicio = i * num_bares
+        fim = inicio + num_bares
+        sublista = distanciaentre[inicio:fim]
+        sublistas.append(sublista)
+    print(sublistas)
+    return sublistas
+
+
+
+
+# Exibir a matriz de distâncias
+
+
+ 
