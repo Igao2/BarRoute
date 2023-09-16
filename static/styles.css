@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Major'; /* Escolha um nome para a fonte */
-    src: url('/static/MajorMonoDisplay-Regular.ttf'); /* Substitua pelo caminho correto da sua fonte */
+    font-family: 'Major'; 
+    src: url('/static/MajorMonoDisplay-Regular.ttf'); 
   }
   @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300&display=swap');
 body{
@@ -56,8 +56,9 @@ button
 }
 .resultado
 {
+    font-family: 'Assistant',sans-serif;
     background-color: black;
-    color: bisque;
+    color: rgb(255, 255, 255);
     height: 400px;
     right: 30px;
     top: 50px;

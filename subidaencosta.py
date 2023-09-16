@@ -6,11 +6,11 @@ def avalia(curso,matriz):
     for i in range(len(curso) - 1):
         bar1 = curso[i]
         bar2 = curso[i + 1]
-        distancia_total+= float(matriz[bar1][bar2])
+        distancia_total+= matriz[bar1][bar2]
     distancia_total += matriz[curso[-1]][curso[0]]
     return distancia_total
 
-def hill_climbing(curso, max_iteracoes,matriz,nomes):
+def subida_encosta(curso, max_iteracoes,matriz,nomes):
     curso_atual = curso[:]
     bar_nomeatual = nomes[:]
     distancia_atual = avalia(curso_atual,matriz)
@@ -25,7 +25,7 @@ def hill_climbing(curso, max_iteracoes,matriz,nomes):
         
         nova_distancia = avalia(novo_curso,matriz)
 
-        # Aceite a nova solução se ela for melhor ou igual
+
         if nova_distancia <= distancia_atual:
             curso_atual = novo_curso
             bar_nomeatual = novo_bar
@@ -43,7 +43,7 @@ def iniciar(matriz,nomes):
     max_iteracoes = 10000
 
 
-    melhor_percurso, melhor_distancia,bares = hill_climbing(solucao_inicial, max_iteracoes,matriz,nomes)
+    melhor_percurso, melhor_distancia,bares = subida_encosta(solucao_inicial, max_iteracoes,matriz,nomes)
     nom = []
     for i in melhor_percurso:
         nom.append(bares[i])

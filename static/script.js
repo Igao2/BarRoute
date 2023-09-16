@@ -136,7 +136,7 @@ function initMap(latitude,longitude) {
                   var distance = element.distance.text;
                   
                   distanciainicial.push(distance)
-                
+                  console.log(distanciainicial)
                   var duration = element.duration.text;
                   var from = origins[i];
                   var to = destinations[j];
@@ -176,19 +176,28 @@ function initMap(latitude,longitude) {
       
          function passar(mec)
          {
-          
+
          
-         
-         
-          for(var i = 0; i<distanciaa.length;i++)
+          for(var i = 0; i<distanciainicial.length;i++)
           {
-            var dist = distanciaa[i].replace(" km","")
+            var ai = distanciainicial[i]
+            var dist = ai.replace(" km","")
             var b = dist.replace(",",".")
-            document.getElementById("distanciaa").value+= "/"+ dist
+            var c = b.replace(" m","")
+            if(i==0)
+            {
+              document.getElementById("distanciaa").value += c
+              
+            }
+            else{
+              document.getElementById("distanciaa").value += "/"+c
+              
+            }
+            
            
           }
           console.log(document.getElementById("distanciaa").value)
-         var qualquercoisa =""
+         
           for(var i = 0 ; i < mec.length;i++)
           {
             var ai = mec[i]
@@ -197,8 +206,16 @@ function initMap(latitude,longitude) {
             var c = b.replace(" m","")
             if(c=="1")
             {
-              
-              continue
+              c=0
+              if(i==0)
+              {
+                document.getElementById("distanciasi").value += c
+                document.getElementById("nomesbar").value += ai[0]
+              }
+              else{
+                document.getElementById("distanciasi").value += "/"+c
+                document.getElementById("nomesbar").value += "/"+ai[0]
+              }
             }
             else{
               if(i==0)
@@ -211,16 +228,22 @@ function initMap(latitude,longitude) {
                 document.getElementById("nomesbar").value += "/"+ai[0]
               }
             }
-            
-          
-            
           }
+
           
           console.log(document.getElementById("distanciasi").value)
           console.log(mec.length)
           for(var i = 0 ; i <nomes.length;i++)
           {
-            document.getElementById("nomes").value+= ","+nomes[i]
+            if(i==0)
+            {
+              document.getElementById("nomes").value += nomes[i]
+              
+            }
+            else{
+              document.getElementById("nomes").value += "/"+nomes[i]
+              
+            }
             
           }
           console.log(document.getElementById("nomes").value)
