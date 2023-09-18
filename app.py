@@ -1,8 +1,6 @@
 from flask import Flask,render_template,request,jsonify
-from dicionario import conveersao,dividir_distancias,alterar_valores
-from subidaencosta import iniciar
-from tempera import iniciarr
-
+from dicionario import conveersao,dividir_distancias
+from sa import Solucao_Inicial,Gerar_Problema,Avalia
 app = Flask(__name__)
 
 @app.route("/")
@@ -20,13 +18,17 @@ def post():
 
    n = dividir_distancias(numero)
  
+   m1,m2 = Gerar_Problema(len(n),n)
+   si = Solucao_Inicial(len(n))
+
+   avalia = Avalia(len(n),si,m1,m2)
+   print(avalia)
    
-   numero2 = dividir_distancias(n2)
+
+
+
    
-   
-   percursoencosta,distanciaencosta = iniciar(n,nome) 
-   
-   return render_template("index.html",percursoencosta ="Solucao inicial:"+str(percursoencosta),distanciaencosta ="Avalia:" +str(distanciaencosta))
+   return render_template("index.html",percursoencosta ="Solucao inicial:"+str(si),distanciaencosta ="Avalia:" +str(avalia))
 
  
 if __name__ == "__main__":
