@@ -68,7 +68,8 @@ function initMap(latitude,longitude) {
           createMarker(results[i]);
           count++
           localStorage.setItem('count',count)
-          console.log(count)
+          document.getElementById("prob").value = count
+          console.log(document.getElementById('prob').value)
           }
         }
 }

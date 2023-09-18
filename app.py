@@ -16,14 +16,17 @@ def post():
    distanciaentre = request.form['distanciasi']
    nomesbar = request.form['nomesbar']
    
-   nome,numero,numero2 =  conveersao(distanciaentre,nomesbar,distanciaa)
+   nome,numero,n2 =  conveersao(distanciaentre,nomesbar,distanciaa)
 
    n = dividir_distancias(numero)
+ 
+   
+   numero2 = dividir_distancias(n2)
    
    
-   percursoencosta,distanciaencosta,nomes = iniciar(n,nome) 
-   percursotempera,distanciatempera,nomez = iniciarr(n,nome)
-   return render_template("index.html",percursoencosta = percursoencosta,distanciaencosta = distanciaencosta, nomesencosta = nomes,percursosimulada=percursotempera, distanciassimulada = distanciatempera, nomessimulada = nomez)
+   percursoencosta,distanciaencosta = iniciar(n,nome) 
+   
+   return render_template("index.html",percursoencosta ="Solucao inicial:"+str(percursoencosta),distanciaencosta ="Avalia:" +str(distanciaencosta))
 
  
 if __name__ == "__main__":
