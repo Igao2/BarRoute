@@ -18,17 +18,17 @@ def post():
 
    n = dividir_distancias(numero)
  
-   m1,m2 = Gerar_Problema(len(n),n)
-   si = Solucao_Inicial(len(n))
+   m1 = Gerar_Problema(len(n),n)
+   si = Solucao_Inicial(len(n),m1)
 
-   avalia = Avalia(len(n),si,m1,m2)
+   avalia = Avalia(m1)
    print(avalia)
    
 
 
 
    
-   return render_template("index.html",percursoencosta ="Solucao inicial:"+str(si),distanciaencosta ="Avalia:" +str(avalia))
+   return render_template("index.html",distancia = "Distancia entre os bares:"+str(m1),percursoencosta ="Solucao inicial:"+str(si),distanciaencosta ="Avalia:" +str(avalia))
 
  
 if __name__ == "__main__":
