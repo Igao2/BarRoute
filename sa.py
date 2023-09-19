@@ -16,10 +16,10 @@ def Gerar_Problema(n,dist):
     """
     
 
-def Avalia(m1):
+def Avalia(s):
     
-    linha = m1[1]
-    print("alinha uai"+str(linha))
+    linha = s
+    #print("alinha uai"+str(linha))
 
     soma = 0
     for valor in linha:

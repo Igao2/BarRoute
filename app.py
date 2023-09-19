@@ -21,7 +21,7 @@ def post():
    m1 = Gerar_Problema(len(n),n)
    si = Solucao_Inicial(len(n),m1)
 
-   avalia = Avalia(m1)
+   avalia = Avalia(si)
    print(avalia)
    
 
