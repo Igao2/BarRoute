@@ -16,23 +16,31 @@ def Gerar_Problema(n,dist):
     """
     
 
-def Avalia(s):
-    
-    linha = s
-    #print("alinha uai"+str(linha))
+def Avalia(matriz,s):
+    distancia_atual = 0
+    for j in range(len(s)):
+        for i in range(len(s)):
+            if j+1<len(s) and i==s[j+1]:
+                distancia_atual+=matriz[s[j]][i]
+    distancia_atual += matriz[s[-1]][s[0]]
+    return distancia_atual    
 
-    soma = 0
-    for valor in linha:
-        soma += valor
-        print(soma)
-    return soma
 
-def Solucao_Inicial(n,matriz):
-    s = []
-    s = matriz[rd.randint(0, len(matriz) - 1)]
+
+
+def Solucao_Inicial(n):
+    s = rd.sample(range(n), n) 
     return s
-    
-   
+#def(linha)
+#
+#menor = 100
+# for i in range(n)
+    # linha = linha + i
+    #   if matriz[linha]<menor
+            #menor = matriz[linha]
+            #posicao = i
+# return menor, posicao  
+
 
 
 

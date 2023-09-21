@@ -39,3 +39,16 @@ def processar_linha(linha, matriz_distancias_ate_origem):
                 linha.insert(0, matriz_distancias_ate_origem[j])
                 linha[i] = 0
     
+
+def dic(matriz1,nomes):
+    dicionario_distancias = {}
+    for i, nome_bar in enumerate(nomes):
+        dicionario_distancias[nome_bar] = {nomes[j]: matriz1[i][j] for j in range(len(nomes))}
+
+# Exibir o dicionário de distâncias
+    for bar, distancias in dicionario_distancias.items():
+         print(f"{bar}: {distancias}")
+    
+    return dicionario_distancias    
+
+    

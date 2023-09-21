@@ -55,7 +55,7 @@ function initMap(latitude,longitude) {
           
             var request = {
             location: lugar,
-            radius: '5000',
+            radius: '2000',
             type: ['bar']
             };
           
