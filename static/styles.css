@@ -43,9 +43,9 @@ button
 {
     position: absolute;
     top: 500px;
-    left: 33%;
+    left: 25%;
     text-align: justify;
-    font-family: 'Assistant',Arial, Helvetica, sans-serif;
+    font-family: 'Montserrat',sans-serif;
     font-size: 15px;
     font-weight: bolder;
     border-radius: 10px;
@@ -56,11 +56,12 @@ button
 }
 .resultado
 {
-    font-family: 'Assistant',sans-serif;
-    background-color: black;
+    position: absolute;
+    font-family: 'Montserrat',sans-serif;
+    background-color: rgb(194, 191, 191);
     color: rgb(255, 255, 255);
     height: 400px;
-    right: 30px;
+    right: 10px;
     top: 50px;
     width: 400px;
 }

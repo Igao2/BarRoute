@@ -1,15 +1,15 @@
 def conveersao(distanciaentre,nomes,distanciainicial):
    distancia_proximo = distanciaentre.split('/')
-   distancia_inicial = distanciainicial.split('/')
-   del distancia_proximo[0]
+ 
+   print(len(distancia_proximo))
    nomes_bar = nomes.split('/')
    
    float_numero = [float(d) if d != "" else 0.0 for d in distancia_proximo]
 
-   float_numero2 = [float(d) if d != "" else 0.0 for d in distancia_inicial]
-       
- 
-   return nomes_bar, float_numero, float_numero2
+   latitude = distanciainicial.split('/')
+   print("no dicionario"+str(len(latitude)))
+   print("tamanho do array no dicionario:"+str(len(float_numero)))
+   return nomes_bar, float_numero, latitude
 
 
 

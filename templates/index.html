@@ -4,6 +4,7 @@
 <head>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC93QqwB1SGrVxEHcaXM38eCN9hlNq8aNE&libraries=places&callback=initMap"></script>
     <link rel="stylesheet" href="/static/styles.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Passion_One:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -22,7 +23,7 @@
 
             <div>
                 <form action="/" method="post" name="form1">
-                    <input type="hidden"  name = "latitudelongitude">
+                    <input type="hidden"  name = "latitudelongitude" id="ltlng">
                     <input type="hidden" id="nomes" name = "nome">
                     <input type="hidden" id="distanciaa"  name = "distanciaAtual">
                     <textarea id="distanciasi" name = "distanciasi"></textarea>
@@ -37,9 +38,14 @@
     
     </div>
     <div class="resultado">
-        {{solucaoinicial}}
-        {{avalia}}
+        {{cursoencosta}}
+        {{distanciaencosta}}
+        {{ordemencosta}}
         
+        
+    </div>
+    <div class="lat" id="la">
+        {{lat}}
     </div>
     <script src="/static/script.js"></script>
     

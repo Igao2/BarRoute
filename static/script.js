@@ -61,6 +61,63 @@ function initMap(latitude,longitude) {
           
             service = new google.maps.places.PlacesService(map);
             service.nearbySearch(request, callbacki);
+            
+            
+            const div = document.getElementById('la')
+            if(div.textContent!="{{lat}}")
+            {
+              const valores = div.textContent.split(',');
+              var matriz = []
+              for(var i = 0 ; i<valores.length;i++)
+              {
+                var b = valores[i].replace("'","").replace("\n        [","").replace(" ","").replace("]","").replace("\n","").replace("    ","").replace("'","")
+                valores[i] = b
+                ai = valores[i].split("/")
+                matriz.push(ai[0])
+                matriz.push(ai[1])
+              }
+               
+              var b = []
+              for(var i = 0;i<matriz.length;i++)
+              {
+                if(i+1<matriz.length)
+                {
+                  b.push([matriz[i],matriz[i+1]])
+                }
+              }
+              listacerta = []
+              for(var i = 0;i<b.length;i++)
+              {
+                if(i==0||i%2==0)
+                {
+                  listacerta.push([b[i][0],b[i][1]])
+                }
+              }
+
+              const listacaminhos = [
+                ...(Array.from(listacerta, (coord) => ({
+                  lat: parseFloat(coord[0]),
+                  lng: parseFloat(coord[1]),
+                }))),
+              ];
+              const caminho = new google.maps.Polyline({
+                path: listacaminhos,
+                geodesic: true,
+                strokeColor: "#FF0000",
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                number : 1
+              });
+              
+              caminho.setMap(map);
+              
+              
+
+
+             
+             
+            }
+            
           }
           function callbacki(results, status) {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -246,6 +303,19 @@ function initMap(latitude,longitude) {
               
             }
             
+          }
+
+          for(var i = 0; i<latlong.length;i++)
+          {
+            if(i==0)
+            {
+              document.getElementById("ltlng").value += latlong[i]
+              
+            }
+            else{
+              document.getElementById("ltlng").value += "/"+latlong[i]
+              
+            }
           }
           console.log(document.getElementById("nomes").value)
           document.forms["form1"].submit()
