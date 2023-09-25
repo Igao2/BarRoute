@@ -65,3 +65,9 @@ button
     top: 50px;
     width: 400px;
 }
+.lat{
+    display: none;
+}
+.long{
+    display: none;
+}

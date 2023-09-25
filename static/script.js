@@ -64,6 +64,7 @@ function initMap(latitude,longitude) {
             
             
             const div = document.getElementById('la')
+            const div2 = document.getElementById('lon')
             if(div.textContent!="{{lat}}")
             {
               const valores = div.textContent.split(',');
@@ -116,6 +117,66 @@ function initMap(latitude,longitude) {
 
              
              
+            }
+            if(div2.textContent!="{{long}}")
+            {
+              const valores = div2.textContent.split(',');
+              var matriz = []
+              for(var i = 0 ; i<valores.length;i++)
+              {
+                var b = valores[i].replace("'","").replace("\n        [","").replace(" ","").replace("]","").replace("\n","").replace("    ","").replace("'","")
+                valores[i] = b
+                ai = valores[i].split("/")
+                matriz.push(ai[0])
+                matriz.push(ai[1])
+              }
+               
+              var b = []
+              for(var i = 0;i<matriz.length;i++)
+              {
+                if(i+1<matriz.length)
+                {
+                  b.push([matriz[i],matriz[i+1]])
+                }
+              }
+              listacerta = []
+              for(var i = 0;i<b.length;i++)
+              {
+                if(i==0||i%2==0)
+                {
+                  listacerta.push([b[i][0],b[i][1]])
+                }
+              }
+              console.log(listacerta)
+
+              const listacaminhos = [
+                ...(Array.from(listacerta, (coord) => ({
+                  lat: parseFloat(coord[0]),
+                  lng: parseFloat(coord[1]),
+                }))),
+              ];
+              console.log(listacaminhos)
+              const caminho = new google.maps.Polyline({
+                path: listacaminhos,
+                geodesic: true,
+                strokeColor: "#0000FF",
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                number : 1,
+                
+              });
+              caminho.setMap(map);
+              const infowindow = new google.maps.InfoWindow({
+                content: "jabulani",
+                ariaLabel: "Uluru",
+              });
+              caminho.addListener("click", () => {
+                infowindow.open({
+                  anchor: caminho,
+                  map,
+                });
+              });
+
             }
             
           }

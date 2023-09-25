@@ -1,35 +1,29 @@
 import random
 import math
 
-def avalia(curso, matriz):
-    distancia_total = 0.0
-    for i in range(len(curso) - 1):
-        bar1 = curso[i]
-        bar2 = curso[i + 1]
-        distancia_total += float(matriz[bar1][bar2])
-    distancia_total += matriz[curso[-1]][curso[0]]
-    return distancia_total
+def avalia(sequencia,matriz):
+    distancia_atual = 0
+    for j in range(len(sequencia)):
+        for i in range(len(sequencia)):
+            if j+1<len(sequencia) and i==sequencia[j+1]:
+                distancia_atual+=matriz[sequencia[j]][i]
+    distancia_atual += matriz[sequencia[-1]][sequencia[0]]
+    return distancia_atual    
 
-def simulated_annealing(curso, matriz, nomes, temperatura_inicial, taxa_resfriamento, max_iteracoes):
+def simulated_annealing(curso, matriz, temperatura_inicial, taxa_resfriamento, max_iteracoes):
     curso_atual = curso[:]
-    bar_nomeatual = nomes[:]
     distancia_atual = avalia(curso_atual, matriz)
     melhor_curso = curso_atual[:]
     melhor_distancia = distancia_atual
     temperatura = temperatura_inicial
 
     for _ in range(max_iteracoes):
-        i, j = random.sample(range(len(curso_atual)), 2)
         novo_curso = curso_atual[:]
-        novo_bar = bar_nomeatual[:]
-        novo_curso[i], novo_curso[j] = novo_curso[j], novo_curso[i]
-        novo_bar[i], novo_bar[j] = novo_bar[j], novo_bar[i]
+        random.shuffle(novo_curso)
         nova_distancia = avalia(novo_curso, matriz)
 
-        
         if nova_distancia <= distancia_atual or random.random() < math.exp((distancia_atual - nova_distancia) / temperatura):
             curso_atual = novo_curso
-            bar_nomeatual = novo_bar
             distancia_atual = nova_distancia
 
         
@@ -40,13 +34,11 @@ def simulated_annealing(curso, matriz, nomes, temperatura_inicial, taxa_resfriam
         
         temperatura *= taxa_resfriamento
 
-    nom = []
-    for i in melhor_curso:
-        nom.append(bar_nomeatual[i])
+   
 
-    return melhor_curso, melhor_distancia, nom
+    return melhor_curso, melhor_distancia
 
-def iniciarr(matriz, nomes):
+def iniciarr(matriz, nomes, long):
     solucao_inicial = list(range(len(matriz)))
     random.shuffle(solucao_inicial)
 
@@ -54,6 +46,15 @@ def iniciarr(matriz, nomes):
     taxa_resfriamento = 0.995
     max_iteracoes = 10000
 
-    melhor_percurso, melhor_distancia, bares = simulated_annealing(solucao_inicial, matriz, nomes, temperatura_inicial, taxa_resfriamento, max_iteracoes)
+    melhor_percurso, melhor_distancia = simulated_annealing(solucao_inicial, matriz, temperatura_inicial, taxa_resfriamento, max_iteracoes)
 
-    return melhor_percurso, melhor_distancia, bares
+    lat = []
+    bares = []
+    for i in range(len(melhor_percurso)):
+        atual = melhor_percurso[i]
+        bares.append(nomes[atual])
+    for i in range(len(melhor_percurso)):
+        atual = melhor_percurso[i]
+        lat.append(long[atual])
+
+    return melhor_percurso, melhor_distancia, bares, lat
