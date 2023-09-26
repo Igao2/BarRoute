@@ -16,6 +16,8 @@ var distanciainicial = []
 var distanciasi = []
 var tempomedio = []
 var nomes =[]
+var posicaobaress = 0
+var posicaobarest = 0
 
     function getLocation() {
 
@@ -185,7 +187,7 @@ function initMap(latitude,longitude) {
           for (var i = 0; i < results.length; i++) {
             
           createMarker(results[i]);
-          
+          count++
           localStorage.setItem('count',count)
           document.getElementById("prob").value = count
           console.log(document.getElementById('prob').value)
@@ -201,23 +203,116 @@ function initMap(latitude,longitude) {
               position: place.geometry.location,
               title: place.name
             });
+          var listacaminhoss= []
+          var listacaminhost = []
           var s = place.name
           var a = place.vicinity
-          
           console.log(a)
-            /*marker.setTitle(place.name)
-            marker.setLabelTextStyle({
-             color: "red",
-             fontSize: "16px",
-              });
-              */
+           var p = place.geometry.location
+           console.log(JSON.stringify(p));
+          
+            var l = document.getElementById("la")
+            if(l.textContent!="{{lat}}")
+            {
+              const valores = l.textContent.split(",")
+              var matriz = []
+              for(var i = 0 ; i<valores.length;i++)
+              {
+                var b = valores[i].replace("'","").replace("\n        [","").replace(" ","").replace("]","").replace("\n","").replace("    ","").replace("'","")
+                valores[i] = b
+                ai = valores[i].split("/")
+                matriz.push(ai[0])
+                matriz.push(ai[1])
+              }
+               
+              var b = []
+              for(var i = 0;i<matriz.length;i++)
+              {
+                if(i+1<matriz.length)
+                {
+                  b.push([matriz[i],matriz[i+1]])
+                }
+              }
+              listacerta = []
+              for(var i = 0;i<b.length;i++)
+              {
+                if(i==0||i%2==0)
+                {
+                  listacerta.push([b[i][0],b[i][1]])
+                }
+              }
+              
+               listacaminhoss = [
+                ...(Array.from(listacerta, (coord) => ({
+                  lat: parseFloat(coord[0]),
+                  lng: parseFloat(coord[1]),
+                }))),
+              ];
+            }
+            for(var i = 0; i<listacaminhoss.length;i++)
+            {
+              
+              if(JSON.stringify(listacaminhoss[i])==JSON.stringify(place.geometry.location))
+              {
+                posicaobaress = i + 1
+              }
+            }
+            var lo = document.getElementById("lon")
+            if(lo.textContent!="{{long}}")
+            {
+              const valores = lo.textContent.split(",")
+              var matriz = []
+              for(var i = 0 ; i<valores.length;i++)
+              {
+                var b = valores[i].replace("'","").replace("\n        [","").replace(" ","").replace("]","").replace("\n","").replace("    ","").replace("'","")
+                valores[i] = b
+                ai = valores[i].split("/")
+                matriz.push(ai[0])
+                matriz.push(ai[1])
+              }
+               
+              var b = []
+              for(var i = 0;i<matriz.length;i++)
+              {
+                if(i+1<matriz.length)
+                {
+                  b.push([matriz[i],matriz[i+1]])
+                }
+              }
+              listacerta = []
+              for(var i = 0;i<b.length;i++)
+              {
+                if(i==0||i%2==0)
+                {
+                  listacerta.push([b[i][0],b[i][1]])
+                }
+              }
+              
+               listacaminhost = [
+                ...(Array.from(listacerta, (coord) => ({
+                  lat: parseFloat(coord[0]),
+                  lng: parseFloat(coord[1]),
+                }))),
+              ];
+            }
+           
+            for(var i = 0; i<listacaminhost.length;i++)
+            {
+              if(JSON.stringify(listacaminhost[i])==JSON.stringify(place.geometry.location))
+              {
+                posicaobarest = i + 1;
+              }
+            }
             var lat = marker.getPosition().lat()
             var long = marker.getPosition().lng()
             latlong.push([lat,long])
             var title = "<span class='title'>"+s+"</span>"+
             "<br>"+
             "<span class = 'informacoes'>"+a+"</span>"+
-            "<br>"
+            "<br>"+
+            "<span class = 'informacoes'> Posicao no caminho da Subida de encosta:"+posicaobaress+"</span>"+
+            "<br>"+
+            "<span class = 'informacoes'> Posicao no caminho da Têmpera Simulada:"+posicaobarest+"</span>"
             
             
            
