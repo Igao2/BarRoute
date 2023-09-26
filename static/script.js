@@ -183,8 +183,9 @@ function initMap(latitude,longitude) {
           function callbacki(results, status) {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
+            
           createMarker(results[i]);
-          count++
+          
           localStorage.setItem('count',count)
           document.getElementById("prob").value = count
           console.log(document.getElementById('prob').value)
@@ -201,6 +202,9 @@ function initMap(latitude,longitude) {
               title: place.name
             });
           var s = place.name
+          var a = place.vicinity
+          
+          console.log(a)
             /*marker.setTitle(place.name)
             marker.setLabelTextStyle({
              color: "red",
@@ -210,13 +214,21 @@ function initMap(latitude,longitude) {
             var lat = marker.getPosition().lat()
             var long = marker.getPosition().lng()
             latlong.push([lat,long])
-       
+            var title = "<span class='title'>"+s+"</span>"+
+            "<br>"+
+            "<span class = 'informacoes'>"+a+"</span>"+
+            "<br>"
+            
+            
+           
+           
             nomes.push(s)
             calcularDistancia(lat,long)
 
             const infowindow = new google.maps.InfoWindow({
-               content: s,
-              ariaLabel: "",
+               
+               content: title,
+               ariaLabel: s
                    });
             marker.addListener("click", () => {
               infowindow.open({
@@ -224,6 +236,9 @@ function initMap(latitude,longitude) {
               map,
               });
             });
+            
+            
+
 
           }
           function calcularDistancia(latitude,longitude)

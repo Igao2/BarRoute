@@ -71,3 +71,11 @@ button
 .long{
     display: none;
 }
+.title{
+    font-family: 'Montserrat',sans-serif;
+    font-weight: bold;
+}
+.informacoes
+{
+    font-family: 'Montserrat',sans-serif;
+}
