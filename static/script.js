@@ -1,6 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     
     getLocation()
+    b = "{{cursoencosta}} \n"+
+    "{{distanciaencosta}} \n"
+    "{{ordemencosta}} \n"+
+    "<br>"
+    "{{cursotempera}} \n"+
+    "{{distanciatempera}}\n"+
+    "{{ordemtempera}}"
+    x = document.getElementById("resultado").textContent
+    if(x!=b)
+    {
+      document.getElementById("resultado").style.display="block"
+      
+    }
+    
     
 });
 
