@@ -14,15 +14,15 @@ def sucessor(curso_atual,matriz):
         novo_curso = curso_atual[:]
         melhor_distancia = 100
         index = random.randint(0,19)
-        for i in range(len(curso_atual)): 
-            if i == index: #verificando se é a posicao aleatoria que foi gerada
+        for i in range(len(curso_atual)):
+            if i == index:
                 for j in range(len(curso_atual)):
                     if i!=j:
                         posicao_random = novo_curso[index]
                         posicao_atual = novo_curso[j]
                         novo_curso[j]=posicao_random
                         novo_curso[index]=posicao_atual
-                        x = avalia(novo_curso,matriz)
+                        x =avalia(novo_curso,matriz)
                         if x <melhor_distancia:
                             curso = novo_curso
                             melhor_distancia = x
