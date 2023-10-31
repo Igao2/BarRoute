@@ -15,7 +15,7 @@ def sucessor(curso_atual,matriz):
         melhor_distancia = 100
         index = random.randint(0,19)
         for i in range(len(curso_atual)): 
-            if i == index: #verificando se é a posicao aleatoria que foi gerada
+            if i == index: 
                 for j in range(len(curso_atual)):
                     if i!=j:
                         posicao_random = novo_curso[index]
@@ -57,4 +57,4 @@ def iniciar(matriz_distancias,matriz_nomes,matriz_lat):
         atual = curso[i]
         lat.append(matriz_lat[atual])    
 
-    return curso,distancia,bares,lat
+    return curso,distancia,lat

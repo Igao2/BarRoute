@@ -28,6 +28,15 @@
                     <input type="hidden" id="distanciaa"  name = "distanciaAtual">
                     <textarea id="distanciasi" name = "distanciasi"></textarea>
                     <textarea id="nomesbar" name="nomesbar"></textarea>
+                    <div class="barrinha">
+                        <select name="barrinha" id="barrinha">
+                            <option value="se">Subida de Encosta</option>
+                            <option value="se*">Subida de Encosta*</option>
+                            <option value="temp">Têmpera Simulada</option>
+                            <option value ="todas">Todas</option>
+                          </select>
+                    </div>
+                    
                 </form>
             </div>
             Tamanho do problema:
@@ -40,11 +49,17 @@
     <div class="resultado" id="resultado">
         {{cursoencosta}}
         {{distanciaencosta}}
-        {{ordemencosta}}
+        
+        <br>
+        
+        {{cursoencosta2}}
+        {{distanciaencosta2}}
+
         <br>
         {{cursotempera}}
         {{distanciatempera}}
-        {{ordemtempera}}
+        
+        
         
     </div>
     <div class="lat" id="la">
@@ -52,6 +67,9 @@
     </div>
     <div class="long" id="lon">
         {{long}}
+    </div>
+    <div class = "lat2" id="laa">
+        {{lat2}}
     </div>
     <script src="/static/script.js"></script>
     

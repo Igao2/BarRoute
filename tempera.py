@@ -78,4 +78,4 @@ def iniciarr(matriz, nomes, long):
         atual = melhor_percurso[i]
         lat.append(long[atual])
 
-    return melhor_percurso, melhor_distancia, bares, lat
+    return melhor_percurso, melhor_distancia, lat

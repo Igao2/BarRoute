@@ -32,6 +32,7 @@ var tempomedio = []
 var nomes =[]
 var posicaobaress = 0
 var posicaobarest = 0
+var posicaobares2 = 0
 
     function getLocation() {
 
@@ -81,6 +82,7 @@ function initMap(latitude,longitude) {
             
             const div = document.getElementById('la')
             const div2 = document.getElementById('lon')
+            const div3 = document.getElementById('laa')
             if(div.textContent!="{{lat}}")
             {
               const valores = div.textContent.split(',');
@@ -128,11 +130,6 @@ function initMap(latitude,longitude) {
               
               caminho.setMap(map);
               
-              
-
-
-             
-             
             }
             if(div2.textContent!="{{long}}")
             {
@@ -194,6 +191,67 @@ function initMap(latitude,longitude) {
               });
 
             }
+            if(div3.textContent!="{{lat2}}")
+            {
+              const valores = div3.textContent.split(',');
+              var matriz = []
+              for(var i = 0 ; i<valores.length;i++)
+              {
+                var b = valores[i].replace("'","").replace("\n        [","").replace(" ","").replace("]","").replace("\n","").replace("    ","").replace("'","")
+                valores[i] = b
+                ai = valores[i].split("/")
+                matriz.push(ai[0])
+                matriz.push(ai[1])
+              }
+               
+              var b = []
+              for(var i = 0;i<matriz.length;i++)
+              {
+                if(i+1<matriz.length)
+                {
+                  b.push([matriz[i],matriz[i+1]])
+                }
+              }
+              listacerta = []
+              for(var i = 0;i<b.length;i++)
+              {
+                if(i==0||i%2==0)
+                {
+                  listacerta.push([b[i][0],b[i][1]])
+                }
+              }
+              console.log(listacerta)
+
+              const listacaminhos = [
+                ...(Array.from(listacerta, (coord) => ({
+                  lat: parseFloat(coord[0]),
+                  lng: parseFloat(coord[1]),
+                }))),
+              ];
+              console.log(listacaminhos)
+              const caminho = new google.maps.Polyline({
+                path: listacaminhos,
+                geodesic: true,
+                strokeColor: "#90EE90",
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                number : 1,
+                
+              });
+              caminho.setMap(map);
+              const infowindow = new google.maps.InfoWindow({
+                content: "jabulani",
+                ariaLabel: "Uluru",
+              });
+              caminho.addListener("click", () => {
+                infowindow.open({
+                  anchor: caminho,
+                  map,
+                });
+              });
+
+            }
+            
             
           }
           function callbacki(results, status) {
@@ -218,6 +276,7 @@ function initMap(latitude,longitude) {
               title: place.name
             });
           var listacaminhoss= []
+          var listacaminhos2 = []
           var listacaminhost = []
           var s = place.name
           var a = place.vicinity
@@ -317,6 +376,52 @@ function initMap(latitude,longitude) {
                 posicaobarest = i + 1;
               }
             }
+            var la2 = document.getElementById("laa")
+            if(la2.textContent!="{{lat2}}")
+            {
+              const valores = la2.textContent.split(",")
+              var matriz = []
+              for(var i = 0 ; i<valores.length;i++)
+              {
+                var b = valores[i].replace("'","").replace("\n        [","").replace(" ","").replace("]","").replace("\n","").replace("    ","").replace("'","")
+                valores[i] = b
+                ai = valores[i].split("/")
+                matriz.push(ai[0])
+                matriz.push(ai[1])
+              }
+               
+              var b = []
+              for(var i = 0;i<matriz.length;i++)
+              {
+                if(i+1<matriz.length)
+                {
+                  b.push([matriz[i],matriz[i+1]])
+                }
+              }
+              listacerta = []
+              for(var i = 0;i<b.length;i++)
+              {
+                if(i==0||i%2==0)
+                {
+                  listacerta.push([b[i][0],b[i][1]])
+                }
+              }
+              
+               listacaminhos2 = [
+                ...(Array.from(listacerta, (coord) => ({
+                  lat: parseFloat(coord[0]),
+                  lng: parseFloat(coord[1]),
+                }))),
+              ];
+            }
+            for(var i = 0; i<listacaminhos2.length;i++)
+            {
+              if(JSON.stringify(listacaminhos2[i])==JSON.stringify(place.geometry.location))
+              {
+                posicaobares2 = i + 1;
+              }
+            }
+
             var lat = marker.getPosition().lat()
             var long = marker.getPosition().lng()
             latlong.push([lat,long])
@@ -326,7 +431,10 @@ function initMap(latitude,longitude) {
             "<br>"+
             "<span class = 'informacoes'> Posicao no caminho da Subida de encosta:"+posicaobaress+"</span>"+
             "<br>"+
+            "<span class = 'informacoes'> Posicao no caminho da Subida de encosta*:"+posicaobares2+"</span>"+
+            "<br>"+
             "<span class = 'informacoes'> Posicao no caminho da Têmpera Simulada:"+posicaobarest+"</span>"
+            
             
             
            

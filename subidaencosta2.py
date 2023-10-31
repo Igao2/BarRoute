@@ -43,7 +43,7 @@ def subida(curso,matriz):
 
     
 
-def iniciar(matriz_distancias,matriz_nomes,matriz_lat):
+def iniciars(matriz_distancias,matriz_nomes,matriz_lat):
     n = len(matriz_distancias)
     sequencia_atual = random.sample(range(n), n) 
     print("Solucao inicial:"+str(sequencia_atual),"Tamanho:"+str(len(sequencia_atual)))
@@ -57,4 +57,4 @@ def iniciar(matriz_distancias,matriz_nomes,matriz_lat):
         atual = curso[i]
         lat.append(matriz_lat[atual])    
 
-    return curso,distancia,bares,lat
+    return curso,distancia,lat
