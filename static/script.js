@@ -232,7 +232,7 @@ function initMap(latitude,longitude) {
               const caminho = new google.maps.Polyline({
                 path: listacaminhos,
                 geodesic: true,
-                strokeColor: "#90EE90",
+                strokeColor: "#006400",
                 strokeOpacity: 1.0,
                 strokeWeight: 2,
                 number : 1,

@@ -44,7 +44,7 @@ def post():
    elif barrinha == "se*":
         return render_template("index.html",distanciaencosta2 ="\n Distancia Subida de Encosta*:"+str(distanciaencosta2),cursoencosta2 ="Curso Subida de encosta*:" +str(cursoencosta2),lat2=lat2)
    elif barrinha =="temp":
-       return render_template("index.html", distanciatempera = "\n Curso Tempera:"+str(cursotempera),long = lon)
+       return render_template("index.html", distanciatempera = "\n Distancia Tempera:"+str(distanciatempera),cursotempera ="\n Curso Tempera:"+str(cursotempera),long = lon)
    elif barrinha =="todas":
         return render_template("index.html",distanciaencosta ="\n Distancia Subida de Encosta:"+str(distanciaencosta),cursoencosta ="Curso Subida de encosta:" +str(cursoencosta),lat=lat,cursotempera = "\n Curso Tempera:"+str(cursotempera),distanciatempera="\n Distancia tempera:"+str(distanciatempera),long = lon,distanciaencosta2 ="\n Distancia Subida de Encosta*:"+str(distanciaencosta2),cursoencosta2 ="Curso Subida de encosta*:" +str(cursoencosta2),lat2=lat2)
 
