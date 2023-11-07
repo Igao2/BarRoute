@@ -1,8 +1,10 @@
 from flask import Flask,render_template,request,jsonify
+import random
 from dicionario import conveersao,dividir_distancias,dic
 from tempera import iniciarr
 from subidaencosta import iniciar
 from subidaencosta2 import iniciars
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -24,10 +26,11 @@ def post():
 
    n = dividir_distancias(numero)
    
-   
-   cursoencosta,distanciaencosta,lat = iniciar(n,nome,latitudee)
-   cursoencosta2,distanciaencosta2,lat2 = iniciars(n,nome,latitudee)
-   cursotempera,distanciatempera,lon =  iniciarr(n,nome,latitudee)
+   sequencia_atual = list(range(len(n)))
+   random.shuffle(sequencia_atual)
+   cursoencosta,distanciaencosta,lat = iniciar(n,nome,latitudee,sequencia_atual)
+   cursoencosta2,distanciaencosta2,lat2 = iniciars(n,nome,latitudee,sequencia_atual)
+   cursotempera,distanciatempera,lon =  iniciarr(n,nome,latitudee,sequencia_atual)
    for i in range(len(lat)):
        muda = lat[i].replace(",","/")
        lat[i] = muda

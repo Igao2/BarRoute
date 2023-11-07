@@ -13,11 +13,11 @@ def sucessor(curso_atual,matriz):
         curso = curso_atual[:]
         novo_curso = curso_atual[:]
         melhor_distancia = 100
-        index = random.randint(0,19)
+        index = random.randint(1,19)
         for i in range(len(curso_atual)): 
             if i == index: 
                 for j in range(len(curso_atual)):
-                    if i!=j:
+                    if i!=j and j!=0:
                         posicao_random = novo_curso[index]
                         posicao_atual = novo_curso[j]
                         novo_curso[j]=posicao_random
@@ -43,9 +43,9 @@ def subida(curso,matriz):
 
     
 
-def iniciar(matriz_distancias,matriz_nomes,matriz_lat):
-    n = len(matriz_distancias)
-    sequencia_atual = random.sample(range(n), n) 
+def iniciar(matriz_distancias,matriz_nomes,matriz_lat,si):
+    
+    sequencia_atual = si
     print("Solucao inicial:"+str(sequencia_atual),"Tamanho:"+str(len(sequencia_atual)))
     curso,distancia= subida(sequencia_atual,matriz_distancias)
     bares = []
