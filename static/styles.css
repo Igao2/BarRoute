@@ -5,6 +5,8 @@
   @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300&display=swap');
 body{
     background-color: black;
+    overflow-y: scroll;
+    border: 1px solid black;
 }
 .gm-style-iw-d
 {
@@ -39,9 +41,6 @@ h1{
 }
 button
 {
-    position: absolute;
-    top: 500px;
-    left: 25%;
     text-align: justify;
     font-family: 'Montserrat',sans-serif;
     font-size: 15px;

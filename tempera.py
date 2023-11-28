@@ -13,9 +13,9 @@ def avalia(sequencia,matriz):
 def sucessor(curso_atual,matriz):
         curso = curso_atual[:]
         novo_curso = curso_atual[:]
-        melhor_distancia = 100
-        index = random.randint(0,19)
-        index2 = random.randint(0,19)
+        
+        index = random.randint(0,(len(curso_atual)-1))
+        index2 = random.randint(0,(len(curso_atual)-1))
         
         posicao_random = novo_curso[index]
         posicao_atual = novo_curso[index2]
@@ -23,14 +23,15 @@ def sucessor(curso_atual,matriz):
         novo_curso[index]=posicao_atual
         x =avalia(novo_curso,matriz)
         curso = novo_curso
-        melhor_distancia = x
-        return curso,melhor_distancia        
+        
+        return curso,x     
 
 def simulated_annealing(curso, matriz, temperatura_inicial, taxa_resfriamento,temperatura_final):
     curso_atual = curso[:]
     distancia_atual = avalia(curso_atual, matriz)
     melhor_curso = curso_atual[:]
     melhor_distancia = distancia_atual
+    print("Distancia atual tempera:"+str(distancia_atual))
     temperatura = temperatura_inicial
 
     while temperatura>temperatura_final:
@@ -58,9 +59,9 @@ def simulated_annealing(curso, matriz, temperatura_inicial, taxa_resfriamento,te
 
 def iniciarr(matriz, nomes, long,si):
     solucao_inicial = si
-    temperatura_inicial = 1000.0
-    taxa_resfriamento = 0.995
-    temperatura_final = 10
+    temperatura_inicial = 500.0
+    taxa_resfriamento = 0.99
+    temperatura_final = 5
 
     melhor_percurso, melhor_distancia = simulated_annealing(solucao_inicial, matriz, temperatura_inicial, taxa_resfriamento, temperatura_final)
 

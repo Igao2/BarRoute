@@ -13,11 +13,7 @@
     <div class="conteiner">
     <div class="zabu">
         <h1>Bar route</h1> <img class="beer" src="/static/761866.jpeg"></img>
-            <br><br>
-            <div id="texto">Bares em até 5km:</div>
-            <br><br>
            
-       
 
             <div id="map" style="height: 200px;"></div>
 
@@ -28,7 +24,24 @@
                     <input type="hidden" id="distanciaa"  name = "distanciaAtual">
                     <textarea id="distanciasi" name = "distanciasi"></textarea>
                     <textarea id="nomesbar" name="nomesbar"></textarea>
-                    <div class="barrinha">
+                    <br>
+                    Tamanho da população
+                    <input type="text" name="tp" id="prob">
+                    <br><br>
+                    Nº de Gerações
+                    <input type="text" name="ng">
+                    <br><br>
+                    Taxa de Cruyf
+                    <input type="number" name="tc">
+                    <br><br>
+                    Taxa de Mutação
+                    <input type="number" name="tm">
+                    <br><br>
+                    Intervalo de gerações
+                    <input type="number" name="ig">
+                    <br><br>
+
+                    <!--<div class="barrinha">
                         <select name="barrinha" id="barrinha">
                             <option value="se">Subida de Encosta</option>
                             <option value="se*">Subida de Encosta*</option>
@@ -36,11 +49,13 @@
                             <option value ="todas">Todas</option>
                           </select>
                     </div>
-                    
+                    -->
+        
                 </form>
             </div>
-            Tamanho do problema:
-            <input type="text" id="prob">
+            <!--Tamanho do problema:
+            <input type="text" id="prob">-->
+            <br>
             <button id="but">Gerar Problema</button>
             
     </div>
